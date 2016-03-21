@@ -35,7 +35,8 @@ var RegistrationForm = function () {
         }
       }
     },
-    creditCards: ko.observableArray()
+    creditCards: ko.observableArray(),
+    interests: ko.observableArray()
   };
 
   var titleOptions = [
@@ -91,7 +92,26 @@ var RegistrationForm = function () {
   };
 
 
-
+	var clear = function () {
+		console.log("Clear customer model");
+		traverseAndClearModel(customer);
+		//add the first credit card
+		addCreditCard();
+	};
+  
+  	var traverseAndClearModel = function(jsonObj) {
+		$.each(jsonObj, function(key,val){
+			if(ko.isObservable(val)) {
+				if(val.removeAll != undefined) {
+					val.removeAll();
+				} else {
+					val(null);
+				}
+			} else {
+				traverseAndClearModel(val);
+			} 
+		});
+	};
 
   $(init);
 
@@ -100,7 +120,9 @@ var RegistrationForm = function () {
     titleSelect: titleSelect,
     titleOptions: titleOptions,
     addCreditCard: addCreditCard,
-    submit: submit
+    submit: submit, 
+    deleCreditCard: deleteCreditCard,
+    clear: clear
   };
 
 
