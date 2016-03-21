@@ -34,7 +34,8 @@ var RegistrationForm = function () {
           country: ko.observable()
         }
       }
-    }
+    },
+    creditCards: ko.observableArray()
   };
 
   var titleOptions = [
@@ -60,7 +61,20 @@ var RegistrationForm = function () {
       }
 }];
 
+   var addCreditCard = function () {
+     customer.creditCards.push({
+       name: ko.observable(), 
+       number: ko.observable(), 
+       expiryDate: ko.observable()});
+   };
+  
+  var deleteCreditCard = function(card) {
+    console.log("Deleting credit card with number:" + card.number());
+    customer.creditCards.remove(card);
+  };
+  
   var init = function () {
+     addCreditCard();
     ko.applyBindings(RegistrationForm);
   };
 
@@ -85,6 +99,7 @@ var RegistrationForm = function () {
     customer: customer,
     titleSelect: titleSelect,
     titleOptions: titleOptions,
+    addCreditCard: addCreditCard,
     submit: submit
   };
 
